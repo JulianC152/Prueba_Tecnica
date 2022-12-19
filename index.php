@@ -13,6 +13,10 @@ if (isset ($_GET['termino'])) {
         $json = file_get_contents($url);
         $datos = json_decode($json, true);
     }
+}else {
+    $url = "https://pixabay.com/api/?key=13119377-fc7e10c6305a7de49da6ecb25";
+    $json = file_get_contents($url);
+    $datos = json_decode($json, true);
 }
 ?>
 <head>
