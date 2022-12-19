@@ -15,7 +15,10 @@ if (isset ($_GET['termino'])) {
     }
 }else {
     $url = "https://pixabay.com/api/?key=13119377-fc7e10c6305a7de49da6ecb25";
-    $json = file_get_contents($url);
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $json = curl_exec($ch);
+    curl_close($ch);
     $datos = json_decode($json, true);
 }
 ?>
