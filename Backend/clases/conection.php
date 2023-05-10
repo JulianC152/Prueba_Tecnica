@@ -2,7 +2,7 @@
 
 class Conection extends PDO{
     private $hostBD = "localhost";
-    private $nombreBD = "prueba_tecnica";
+    private $nombreBD = "tienda";
     private $usuarioBD = "root";
     private $paswordBD = "";
 

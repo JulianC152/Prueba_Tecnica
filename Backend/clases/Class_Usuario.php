@@ -6,14 +6,16 @@
         private $edad;
         private $foto;
         private $tipo_documento;
+        private $id_rol;
  
 
-        public function __construct($nombre, $apellido, $edad, $foto, $tipo_documento){
+        public function __construct($nombre, $apellido, $edad, $foto, $tipo_documento, $id_rol){
             $this->nombre = $nombre;
             $this->apellido = $apellido;
             $this->edad = $edad;
             $this->foto = $foto;
             $this->tipo_documento = $tipo_documento;
+            $this->id_rol = $id_rol;
         }
 
         /**
@@ -116,18 +118,30 @@
                 return $this;
         }
 
+        public function getRol()
+        {
+                return $this->$id_rol;
+        }
+
+        public function setid_rol($id_rol)
+        {
+                $this->id_rol = $id_rol;
+                
+                return $this;
+        }
+
         public static function guardarUsuario()
         {
                 $pdo = new conection();
-                $sql = "INSERT INTO usuario (Nombre, Apellido, Edad, Foto, Tipo_Documento) 
-                VALUES (:Nombre, :Apellido, :Edad, :Foto, :Tipo_Documento)";
+                $sql = "INSERT INTO usuario (Nombre, Apellido, Edad, Foto, Tipo_Documento, id_rol) 
+                VALUES (:Nombre, :Apellido, :Edad, :Foto, :Tipo_Documento, :id_rol)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':Nombre', $_POST['Nombre']);
                 $stmt->bindValue(':Apellido', $_POST['Apellido']);
                 $stmt->bindValue(':Edad', $_POST['Edad']);
                 $stmt->bindValue(':Foto', $_POST['Foto']);
                 $stmt->bindValue(':Tipo_Documento', $_POST['Tipo_Documento']);
-                //$stmt->bindValue(':rol', $_POST['rol']);
+                $stmt->bindValue(':id_rol', $_POST['id_rol']);
                 $stmt->execute();
         }
         
@@ -149,7 +163,7 @@
         public function actualizarUsuario($id)
         {
                 $pdo = new conection();
-                $sql = "UPDATE usuario SET Nombre=:Nombre, Apellido=:Apellido, Edad=:Edad, Foto=:Foto, Tipo_Documento=:Tipo_Documento 
+                $sql = "UPDATE usuario SET Nombre=:Nombre, Apellido=:Apellido, Edad=:Edad, Foto=:Foto, Tipo_Documento=:Tipo_Documento, id_rol=:id_rol
                 WHERE $id = :id";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':Nombre', $_GET['Nombre']);
@@ -158,13 +172,13 @@
                 $stmt->bindValue(':Foto', $_GET['Foto']);
                 $stmt->bindValue(':Tipo_Documento', $_GET['Tipo_Documento']);
                 $stmt->bindValue(':id', $_GET['id']);
-                //$stmt->bindValue(':rol', $_POST['rol']);
+                $stmt->bindValue(':id_rol', $_GET['id_rol']);
                 $stmt->execute();
         }
 
-        public static function eliminarUsuario()
+        public static function eliminarUsuario($id)
         {
-            # code...
+                //$query = "DELETE FROM usuario WHERE id = '$id'";
         }
 
     }
