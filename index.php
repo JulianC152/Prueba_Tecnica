@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html>
+    
 <?php
-
+    // Creamos la Variable $url donde se guardara la API solicitada
     $url = "https://pixabay.com/api/?key=13119377-fc7e10c6305a7de49da6ecb25&lang=es";
 
+    //Creamos una nueva variable la cual sera la encargada de recibir la palabra que se quiera buscar
     $termino = "";
+    // Preguntamos si dentro de la variable encontramos algo y posteriormente verificamos su longitud 
+    //en caso de que en la variable contenga algo
     if (isset ($_GET['termino'])) {
         $longitudTermino = strlen($_GET['termino']);
         if ($longitudTermino <= 100) {
-            $termino = "&q=".$_GET['termino'];
+            $termino = "&q=".$_GET['termino']; //Si es menor de 100 caracteres
         }else {
-            echo '<script>alert("Error, Numero de caracteres mayor a 100")</script>';
-            $termino = "";
+            echo '<script>alert("Error, Numero de caracteres mayor a 100")</script>'; // en caso de que contenga mas de 100 caracteres
+            $termino = ""; //Limpiamos la variable
         }
     }
-
+    
+    //La Categoria se usuara para la lista(DropDown)
     if (isset ($_GET['Categoria'])) {
         $Categoria = "&category=".$_GET['Categoria'];
     }else{
         $Categoria = "";
     }
-
+    //Concardenamos en la url el termino y la categoria en caso de que se hayan solicitado
     $url = $url. $termino. $Categoria;
-    $json = file_get_contents($url);
+    //Pasamos la API a formato JSON para ser consumida
+    $json = file_get_contents($url); 
     $datos = json_decode($json, true);
 
 ?>
@@ -47,6 +53,7 @@
 
                                     <select class="form-select" name="Categoria" p>
                                         <option disabled selected>Selecciona categoria</option>
+                                        <!-- Se colocan los siguientes if para que la categoria seleccionada sea mostrada aun despues de ser buscada -->
                                         <option value="science" <?php if ( isset ($_GET['Categoria']) AND $_GET['Categoria'] == 'science') { echo 'selected'; } ?> >Ciencia</option>
                                         <option value="education" <?php if ( isset ($_GET['Categoria']) AND $_GET['Categoria'] == 'education') { echo 'selected'; } ?> >Educación</option>
                                         <option value="people" <?php if ( isset ($_GET['Categoria']) AND $_GET['Categoria'] == 'people') { echo 'selected'; } ?> >Personas</option>
@@ -57,10 +64,12 @@
 
                                     <?php 
                                         if ($termino != '') { 
+                                            //Si se ah buscado alguna palabra entra aqui
                                             ?> 
                                                 <input value="<?php echo $_GET['termino'] ?>" class="form-control me-2" type="text" name="termino" placeholder="Buscar" aria-label="Search" maxlength="100">
                                             <?php 
                                         }else{
+                                            //Si no se ah buscado ninguna palabra entra aqui
                                             ?>
                                                 <input  class="form-control me-2" type="text" name="termino" placeholder="Buscar" aria-label="Search" maxlength="100">
                                                 <?php 
@@ -77,6 +86,7 @@
             <div class="container text-center bg-light">
                 <div class="row row-cols-3">
                 <?php
+                    //Recorremos la variable $datos para poder sacar cada uno de los datos de la imagen
                     for ($i=0; $i < count($datos["hits"]) ; $i++) { 
                         $tags = $datos["hits"][$i]["tags"];
                         $likes = $datos["hits"][$i]["likes"];

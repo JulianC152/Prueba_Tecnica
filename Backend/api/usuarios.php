@@ -1,5 +1,5 @@
 <?php
-    //Recibumos las peticiones de Usuario
+    //Recibimos las peticiones de Usuario
     header("Content-Type: application/json");
     include ("../clases/Class_Usuario.php");
     $pdo = new conection(); 

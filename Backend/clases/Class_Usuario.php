@@ -7,15 +7,14 @@
         private $foto;
         private $tipo_documento;
         private $id_rol;
- 
 
         public function __construct($nombre, $apellido, $edad, $foto, $tipo_documento, $id_rol){
-            $this->nombre = $nombre;
-            $this->apellido = $apellido;
-            $this->edad = $edad;
-            $this->foto = $foto;
-            $this->tipo_documento = $tipo_documento;
-            $this->id_rol = $id_rol;
+                $this->nombre = $nombre;
+                $this->apellido = $apellido;
+                $this->edad = $edad;
+                $this->foto = $foto;
+                $this->tipo_documento = $tipo_documento;
+                $this->id_rol = $id_rol;
         }
 
         /**
@@ -181,8 +180,7 @@
                 //$query = "DELETE FROM usuario WHERE id = '$id'";
         }
 
-    }
-    
+}
 
 
 ?>
